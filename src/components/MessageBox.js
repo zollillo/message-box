@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import '../css/MessageBox.css';
+import {formatDate} from '../helpers'; 
 
 class Message extends Component {
   render() {
+    const message = this.props.content;
     return (
       <div className="message">
-        <div className="message-name">{this.props.name}</div>
-        <div className="message-subject">{this.props.subject}</div>
-        <div className="message-body">{this.props.children}</div>
+        <div className="message-name">{message.name} {message.email}</div>
+        <div className="message-subject">{message.subject}</div>
+        <div className="message-body">{message.body}</div>
+        <div className="message-body">{formatDate(message.date)}</div>
       </div>
     )
   }
@@ -38,9 +41,9 @@ const messages = [
 
 class MessageList extends Component {
   render() {
-    // console.table(this.props.messages);
+    console.table(this.props.messages);
 
-    const messageNodes = this.props.messages.map(message => <Message key={message.id} name={message.name} subject={message.subject} />);
+    const messageNodes = this.props.messages.map(message => <Message key={message.id} content={message} />);
 
     return (
       <div className="message-list">
