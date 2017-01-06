@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../css/App.css';
+import '../css/MessageBox.css';
 
 class Message extends Component {
   render() {
@@ -38,7 +38,7 @@ const messages = [
 
 class MessageList extends Component {
   render() {
-    console.table(this.props.messages);
+    // console.table(this.props.messages);
 
     const messageNodes = this.props.messages.map(message => <Message key={message.id} name={message.name} subject={message.subject} />);
 
@@ -50,7 +50,7 @@ class MessageList extends Component {
   }
 }
 
-class App extends Component {
+class MessageBox extends Component {
   constructor() {
     super();
 
@@ -114,12 +114,12 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App message-box">
+      <div className="message-box">
         <h2>Messages</h2>
-        <MessageList messages={this.state.messages}/>
+        <MessageList messages={this.state.messages} />
       </div>
     );
   }
 }
 
-export default App;
+export default MessageBox;
