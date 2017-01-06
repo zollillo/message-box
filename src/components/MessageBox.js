@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import '../css/MessageBox.css';
-import {formatDate} from '../helpers'; 
+import {formatDate} from '../helpers';
 
 class Message extends Component {
   render() {
     const message = this.props.content;
+    const isDraft = message.status === 'DRAFT';
+    const classes = classNames({
+      'message': true,
+      'unread': !message.read
+    });
     return (
-      <div className="message">
-        <div className="message-name">{message.name} {message.email}</div>
-        <div className="message-subject">{message.subject}</div>
-        <div className="message-body">{message.body}</div>
-        <div className="message-body">{formatDate(message.date)}</div>
+      <div className={classes}>
+        <div className="message-cell message-name">{message.name} &lt;{message.email}&gt;</div>
+        <div className="message-cell message-subject">{message.subject}</div>
+        <div className="message-cell message-body">{message.body}</div>
+        <div className="message-cell message-date">
+          {isDraft ? <span className="message-draft">Entwurf</span> : formatDate(message.date)}
+        </div>
       </div>
     )
   }
@@ -118,7 +126,6 @@ class MessageBox extends Component {
   render() {
     return (
       <div className="message-box">
-        <h2>Messages</h2>
         <MessageList messages={this.state.messages} />
       </div>
     );
