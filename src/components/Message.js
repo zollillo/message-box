@@ -51,5 +51,10 @@ class Message extends Component {
   }
 }
 
+// Make sure the data that is provided for our prop is valid.
+Message.propTypes =  {
+  content: React.PropTypes.object.isRequired
+};
+
 
 export default Message;

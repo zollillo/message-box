@@ -15,4 +15,10 @@ class MessageList extends Component {
   }
 }
 
+// Make sure the data that is provided for our prop is valid.
+MessageList.propTypes =  {
+  messages: React.PropTypes.array.isRequired
+};
+
+
 export default MessageList;

@@ -73,4 +73,9 @@ class MessageBox extends Component {
   }
 }
 
+MessageBox.propTypes =  {
+  url: React.PropTypes.string.isRequired
+};
+
+
 export default MessageBox;
