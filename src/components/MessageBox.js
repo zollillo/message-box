@@ -4,15 +4,38 @@ import '../css/MessageBox.css';
 import {formatDate} from '../helpers';
 
 class Message extends Component {
+  constructor(props) {
+    super(props);
+
+    // We need to bind 'this' in order to have a reference to
+    // our component from within our custom method.
+    this.markMessageAsRead = this.markMessageAsRead.bind(this);
+
+    this.state = {
+      isDraft: this.props.content.status === 'DRAFT',
+      isUnread: !this.props.content.read
+    };
+  }
+
+
+  markMessageAsRead() {
+    if (this.state.isUnread) {
+      this.setState((prevState, props) => ({
+        isUnread: !prevState.isUnread
+      }));
+    }
+    return;
+  }
+
+
   render() {
     const message = this.props.content;
-    const isDraft = message.status === 'DRAFT';
     const classes = classNames({
       'message': true,
-      'unread': !message.read
+      'unread': this.state.isUnread
     });
     return (
-      <div className={classes}>
+      <div className={classes} onClick={this.markMessageAsRead}>
         <div className="message-cell message-name">
           {message.name}
           <span className="message-email">{message.email}</span>
@@ -22,39 +45,16 @@ class Message extends Component {
           <span className="message-body">{message.body}</span>
         </div>
         <div className="message-cell message-date">
-          {isDraft ? <mark>Entwurf</mark> : formatDate(message.date)}
+          {this.state.isDraft ? <mark>Entwurf</mark> : formatDate(message.date)}
         </div>
       </div>
     )
   }
 }
 
-const messages = [
-  {
-    "id": "fe125307-9bc1-5312-8461-777a0bd724bd",
-    "date": "2015-11-25T06:40:19.217Z",
-    "name": "Remo Checcucci",
-    "email": "goz@epost.de",
-    "read": false,
-    "status": "SENT",
-    "subject": "Similique non ullam quam porro quod.",
-    "body": "aperiam"
-  },
-  {
-    "id": "39b94221-eeeb-563a-88ec-b95b1db04bbf",
-    "date": "2016-07-25T09:11:37.280Z",
-    "name": "Antonino Conte",
-    "email": "nohe@epost.de",
-    "read": false,
-    "status": "DRAFT",
-    "subject": "Minima atque dolore provident eum aspernatur molestiae.",
-    "body": "Ut occaecati non pariatur animi. Quisquam excepturi error eum quis ut. Voluptatum cum ducimus alias atque ad eligendi quas nemo."
-  }
-];
-
 class MessageList extends Component {
   render() {
-    console.table(this.props.messages);
+    // console.table(this.props.messages);
 
     const messageNodes = this.props.messages.map(message => <Message key={message.id} content={message} />);
 
@@ -70,9 +70,8 @@ class MessageBox extends Component {
   constructor() {
     super();
 
-    // In order to have access to 'this' as a reference to
-    // our actual component from within our custom methods,
-    // we need to bind each custom method to the component.
+    // We need to bind 'this' in order to have a reference to
+    // our component from within our custom method.
     this.fetchData = this.fetchData.bind(this);
 
     // Initial state
