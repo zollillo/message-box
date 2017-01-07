@@ -13,11 +13,16 @@ class Message extends Component {
     });
     return (
       <div className={classes}>
-        <div className="message-cell message-name">{message.name} &lt;{message.email}&gt;</div>
-        <div className="message-cell message-subject">{message.subject}</div>
-        <div className="message-cell message-body">{message.body}</div>
+        <div className="message-cell message-name">
+          {message.name}
+          <span className="message-email">{message.email}</span>
+        </div>
+        <div className="message-cell message-content">
+          <span className="message-subject">{message.subject}</span>
+          <span className="message-body">{message.body}</span>
+        </div>
         <div className="message-cell message-date">
-          {isDraft ? <span className="message-draft">Entwurf</span> : formatDate(message.date)}
+          {isDraft ? <mark>Entwurf</mark> : formatDate(message.date)}
         </div>
       </div>
     )
