@@ -21,10 +21,12 @@ class MessageBox extends Component {
   fetchData() {
     // Is the Fetch API supported by the current browser?
     // Then we use it for fetching the JSON data.
+    // Otherwise, we fall back to use the XMLHttpRequest object.
+    // For example, according to http://caniuse.com/#feat=fetch [as of 2017-01-07],
+    // the Fetch API is not supported by Safari 10.
     // 👉 https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
     if (self.fetch) {
       fetch(this.props.url)
-      // fetch(pathToRessource)
         // When fetch() returns the promise containing our response stream,
         // we read its JSON using json() which in turn also
         // returns a promise delivering the JSON data for us to use to set the component's state.
@@ -39,8 +41,6 @@ class MessageBox extends Component {
         .catch(error => {
           console.log(`There has been a problem with your fetch operation: ${error.message}`);
         });
-
-    // Otherwise, we fall back to use the XMLHttpRequest object.
     } else {
       const xhr = new XMLHttpRequest();
       xhr.onreadystatechange = () => {
@@ -58,7 +58,8 @@ class MessageBox extends Component {
     }
   }
 
-
+  // Our component has been inserted in the DOM,
+  // so we can request the data.
   componentDidMount() {
     this.fetchData();
   }
