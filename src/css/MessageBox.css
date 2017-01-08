@@ -17,6 +17,13 @@
   box-shadow: 0 2px 4px rgba(0,0,0,.24);
 }
 
+.unread {
+  font-weight: bold;
+}
+
+.message.unread {
+  cursor: pointer;
+}
 .message-name {
   width: 25%;
   padding-left: 1em;
@@ -32,10 +39,6 @@
 
 .message-date {
   width: 10%;
-}
-
-.unread {
-  font-weight: bold;
 }
 
 .message:hover {
