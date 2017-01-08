@@ -29,6 +29,8 @@ class Message extends Component {
 
   render() {
     const message = this.props.content;
+    // We apply the 'unread' class dynamically
+    // cf. http://www.codeblocq.com/2015/12/Easy-dynamic-classes-with-React/
     const classes = classNames({
       'message': true,
       'unread': this.state.isUnread
