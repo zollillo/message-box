@@ -74,7 +74,7 @@ Since this project is based on [Create React App](https://github.com/facebookinc
 
 ## Message Data
 
-The JSON data set that holds our messages describes an array of message objects with the following properties:  
+The `JSON` data set that holds our messages describes an array of message objects with the following properties:  
 
 ```
 [
@@ -98,15 +98,40 @@ Fetching the data happens from within React's lifecycle method `componentDidMoun
 
 ## Message Box UI
 
+The `JSON` data (see above) provides a set of messages that the message box ui displays in a list. The following sections describe the structure of the ui components, the markup and layout as well as the interaction.
+
 ### Components
-The message box with its list of messages is created by composing multiple React components into one that will be rendered into the page template. The outermost parent component is the `MessageBox` component. Inside of this `MessageBox` component exists another component called `Message-List`. Finally, the `MessageList` component renders out a `Message` component for each message item in the `JSON` data set.  
+The message box with its list of messages is created by composing multiple React components into one that will be rendered into the page template. The outermost parent component is the `MessageBox` component. Inside of this `MessageBox` component exists another component called `Message-List`. Finally, the `MessageList` component renders out a `Message` component for each message item in the `JSON` data set. The message data is passed via properties in order to access and use it inside the components to show the values and change state (e.g. mark an unread message as read on click).  
 
-The following screenshot illustrates the component structure when inspected in the React Developer Tools:  
+The following screenshot illustrates the component structure when inspected with React Developer Tools:  
 
-![component structure](https://dl.dropboxusercontent.com/u/19257460/message-box/mb-component-structure.png "Component structure in react dev tools")  
+![component structure](https://dl.dropboxusercontent.com/u/19257460/message-box/mb-component-structure.png "Component structure in React dev tools")  
 
 ### Markup & Layout
-![html markup](https://dl.dropboxusercontent.com/u/19257460/message-box/mb-html-structure.png "HTML markup in dev tools")  
+Both the `MessageBox` and the `MessageList` component are merely composed of one `<div>` element.  
+Each `Message` component, however, comprises several `<div>` and `<span>` elements layed out using the [Flexbox layout](https://css-tricks.com/snippets/css/a-guide-to-flexbox/). This allows for aligning the content of each message in a row-oriented, table-cell-like fashion. The horizontal width is divided between three _message cells_ (`<div>` elements):  
+
+* 25% to display the name and the email address
+* 65% to display the subject and the body (overflowing text is truncated)
+* 10% to display the date  
+
+The `<span>` elements help to apply CSS styling such as `::before` and `::after` pseudo elements to use the characters `<` and `>` to enclose the email address (` <jane.doe@abc.de>`) and to color the message body text differently than the message subject.  
+
+Using  [React and JSX](https://facebook.github.io/react/docs/conditional-rendering.html#inline-if-else-with-conditional-operator) it is possible to conditionally render elements inline. This allows us the display either the `date` of the email or the word `Entwurf` (= German word for 'draft') depending on the `status` property of the message. The `date` is formatted using [Moment.js](http://momentjs.com/) to make the [ISO 8601](https://www.w3.org/TR/NOTE-datetime) date format more readable.  
+
+Inside the `Message` component:
+```
+<div className="message-cell message-date">
+  {this.state.isDraft ? <mark>Entwurf</mark> : formatDate(message.date)}
+</div>
+```
+
+Similarly, a CSS class of `unread` is dynamically applied if the value of the message's `read` property is `false` which results in highlighting the entire message row in __bold font__.  
+
+
+The screenshot below shows the HTML markup/DOM tree inspected with Chrome Developer Tools (please also refer to the [Demo](#demo) to see the rendered page):  
+
+![html markup](https://dl.dropboxusercontent.com/u/19257460/message-box/mb-html-structure.png "HTML markup in Chrome dev tools")  
 
 
 ### Interaction
