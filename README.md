@@ -99,7 +99,7 @@ Fetching the data happens from within React's lifecycle method `componentDidMoun
 
 ## Message Box UI
 
-The `JSON` data (see above) provides a set of messages that the message box ui displays in a list. The following sections describe the structure of the ui components, the markup and layout as well as the interaction.
+The `JSON` data (see above) provides a set of messages that the message box ui displays in a list. The following sections describe the structure of the ui components, the markup and layout, as well as the interaction.
 
 ### Components
 The message box with its list of messages is created by composing multiple React components into one that will be rendered into the page template. The outermost parent component is the `MessageBox` component. Inside of this `MessageBox` component exists another component called `MessageList`. Finally, the `MessageList` component renders out a `Message` component for each message item in the `JSON` data set. The message data is passed via properties in order to access and use it inside the components to show the values and change state (e.g. mark an unread message as read on click).  
@@ -116,9 +116,9 @@ Each `Message` component, however, comprises several `<div>` and `<span>` elemen
 * 65% to display the subject and the body (overflowing text is truncated)
 * 10% to display the date  
 
-The `<span>` elements help to apply CSS styling such as `::before` and `::after` pseudo elements to use the characters `<` and `>` to enclose the email address (` <jane.doe@abc.de>`) and to color the message body text differently than the message subject.  
+The `<span>` elements help to apply CSS styling such as `::before` and `::after` pseudo elements for enclosing the email address with the characters `<` and `>` (` <jane.doe@abc.de>`) and for coloring the message body text differently than the message subject.  
 
-Using  [React and JSX](https://facebook.github.io/react/docs/conditional-rendering.html#inline-if-else-with-conditional-operator) it is possible to conditionally render elements inline. This allows us the display either the `date` of the email or the word `Entwurf` (= German word for 'draft') depending on the `status` property of the message. The `date` is formatted using [Moment.js](http://momentjs.com/) to make the [ISO 8601](https://www.w3.org/TR/NOTE-datetime) date format more readable.  
+Using  [React and JSX](https://facebook.github.io/react/docs/conditional-rendering.html#inline-if-else-with-conditional-operator), it is possible to conditionally render elements inline. This allows us the display either the `date` of the email or the word `Entwurf` (= German word for 'draft') depending on the `status` property of the message. The `date` is formatted using [Moment.js](http://momentjs.com/) to make the [ISO 8601](https://www.w3.org/TR/NOTE-datetime) date format more readable.  
 
 Inside the `Message` component:
 ```
@@ -137,7 +137,7 @@ The screenshot below shows the HTML markup/DOM tree inspected with Chrome Develo
 
 ### Interaction
 
-The message properties `status` and `read` constitute the state of the `Message` component.  
+The message properties `status` and `read` constitute the state of the `Message` component:  
 
 ```
 class Message extends Component {
@@ -173,4 +173,13 @@ markMessageAsRead() {
 }
 ```
 
-_Note that in this case, the changes are not persistent, since the application doesn't update values in the `JSON` file, i.e. reloading the page results in delivering the original data._  
+Note that in this case, the changes are not persistent, since the application doesn't update values in the `JSON` file, i.e. reloading the page results in delivering the original data.  
+
+<br/>
+
+-----  
+
+Tested in
+* Chrome 55.0.2883.95 (64-bit)
+* Firefox 50.1.0
+* Safari 10.0.2
