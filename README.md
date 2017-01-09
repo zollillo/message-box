@@ -118,7 +118,7 @@ Each `Message` component, however, comprises several `<div>` and `<span>` elemen
 
 The `<span>` elements help to apply CSS styling such as `::before` and `::after` pseudo elements for enclosing the email address with the characters `<` and `>` (` <jane.doe@abc.de>`) and for coloring the message body text differently than the message subject.  
 
-Using  [React and JSX](https://facebook.github.io/react/docs/conditional-rendering.html#inline-if-else-with-conditional-operator), it is possible to conditionally render elements inline. This allows us the display either the `date` of the email or the word `Entwurf` (= German word for 'draft') depending on the `status` property of the message. The `date` is formatted using [Moment.js](http://momentjs.com/) to make the [ISO 8601](https://www.w3.org/TR/NOTE-datetime) date format more readable.  
+Using  [React and JSX](https://facebook.github.io/react/docs/conditional-rendering.html#inline-if-else-with-conditional-operator), it is possible to conditionally render elements inline. This allows us to display either the `date` of the email or the word `Entwurf` (= German word for 'draft') depending on the `status` property of the message. The `date` is formatted using [Moment.js](http://momentjs.com/) to make the [ISO 8601](https://www.w3.org/TR/NOTE-datetime) date format more readable.  
 
 Inside the `Message` component:
 ```
