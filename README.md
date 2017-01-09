@@ -1,7 +1,8 @@
 # Message Box 📬
 
 Message Box is a React application that displays a list of email messages. The resulting output is akin to the common representation of such lists found in email client applications.  
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app) and uses ES6 syntax.
 
 
 ## Table of Contents
@@ -11,7 +12,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * [Project Structure](#project-structure)
 * [Message Data](#message-data)
 * [Message Box UI](#message-box-ui)
-
+* [Interaction](#interaction)
 
 ## Demo
 
@@ -101,7 +102,7 @@ Fetching the data happens from within React's lifecycle method `componentDidMoun
 The `JSON` data (see above) provides a set of messages that the message box ui displays in a list. The following sections describe the structure of the ui components, the markup and layout as well as the interaction.
 
 ### Components
-The message box with its list of messages is created by composing multiple React components into one that will be rendered into the page template. The outermost parent component is the `MessageBox` component. Inside of this `MessageBox` component exists another component called `Message-List`. Finally, the `MessageList` component renders out a `Message` component for each message item in the `JSON` data set. The message data is passed via properties in order to access and use it inside the components to show the values and change state (e.g. mark an unread message as read on click).  
+The message box with its list of messages is created by composing multiple React components into one that will be rendered into the page template. The outermost parent component is the `MessageBox` component. Inside of this `MessageBox` component exists another component called `MessageList`. Finally, the `MessageList` component renders out a `Message` component for each message item in the `JSON` data set. The message data is passed via properties in order to access and use it inside the components to show the values and change state (e.g. mark an unread message as read on click).  
 
 The following screenshot illustrates the component structure when inspected with React Developer Tools:  
 
@@ -135,3 +136,41 @@ The screenshot below shows the HTML markup/DOM tree inspected with Chrome Develo
 
 
 ### Interaction
+
+The message properties `status` and `read` constitute the state of the `Message` component.  
+
+```
+class Message extends Component {
+  constructor(props) {
+    super(props);
+
+    // ...
+
+    this.state = {
+      isDraft: this.props.content.status === 'DRAFT',
+      isUnread: !this.props.content.read
+    };
+  }
+
+  // ...
+}
+```
+
+Over time, the keys and values of the component's `state object` can change, and responding to those changes, the component can re-render itself to represent the current or correct state in the ui.  
+
+It is possible to click on the messages, and as [demonstrated above](#demo), this changes the state of __unread messages__ so that the bold font highlighting is disabled.  
+
+The `onClick` handler of the `Message` component:
+
+```
+markMessageAsRead() {
+  if (this.state.isUnread) {
+    this.setState((prevState, props) => ({
+      isUnread: !prevState.isUnread
+    }));
+  }
+  return;
+}
+```
+
+_Note that in this case, the changes are not persistent, since the application doesn't update values in the `JSON` file, i.e. reloading the page results in delivering the original data._  
